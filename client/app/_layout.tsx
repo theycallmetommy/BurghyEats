@@ -1,5 +1,11 @@
-import { Stack } from "expo-router";
+import { Stack } from 'expo-router';
 
-export default function RootLayout() {
-  return <Stack />;
+export default function Layout() {
+    return (
+        <Stack>
+        <Stack.Screen name="LoginScreen" options={{ headerShown: false }} />
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+        </Stack>
+    );
 }
