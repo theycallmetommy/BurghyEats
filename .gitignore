@@ -1,4 +1,5 @@
 client/.example
+client/app-example
 
 # Node.js dependencies
 client/node_modules/
