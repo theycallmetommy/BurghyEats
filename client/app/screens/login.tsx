@@ -1,12 +1,30 @@
 import { StatusBar } from 'expo-status-bar';
 import React from "react";
-import { Text, View, SafeAreaView, StyleSheet, Image } from "react-native";
+import { Text, TextInput, View, SafeAreaView, StyleSheet, Image, Button, Alert } from "react-native";
 
 export default function Login() {
+    const [user, onChangeUsername] = React.useState('')
+    const [pass, onChangePassword] = React.useState('')
+
     return (
         <View style={styles.container}>
-            <Image style={styles.logo} source={{ uri: 'https://logoipsum.com/artwork/335'}}/>
             <Text>Login</Text>
+            <TextInput
+              style={styles.input}
+              onChangeText={onChangeUsername}
+              value={user}
+              placeholder="Username"
+            />
+            <TextInput
+              style={styles.input}
+              onChangeText={onChangePassword}
+              value={pass}
+              placeholder="Password"
+            />
+            <Button
+              title="Submit"
+              onPress={() => Alert.alert(user,pass)}
+            />
         </View>
     );
 }
@@ -23,4 +41,10 @@ const styles = StyleSheet.create({
     height: 200,
     resizeMode: 'contain',
   },
+  input : {
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+  }
 });
