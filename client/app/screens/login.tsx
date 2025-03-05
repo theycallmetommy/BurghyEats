@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React from "react";
 import { Text, TextInput, View, SafeAreaView, StyleSheet, Image, Button, Alert } from "react-native";
+import Logo from "../assets/logo.svg";
 
 export default function Login() {
     const [user, onChangeUsername] = React.useState('')
@@ -8,6 +9,7 @@ export default function Login() {
 
     return (
         <View style={styles.container}>
+            <Logo width={100} height={100} />
             <Text>Login</Text>
             <TextInput
               style={styles.input}

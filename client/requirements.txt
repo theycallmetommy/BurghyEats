@@ -1,0 +1,4 @@
+#Dependencies
+
+# Support for .svg files
+npm install -s react-native-svg
