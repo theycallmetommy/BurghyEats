@@ -3,7 +3,7 @@ import React from "react";
 import { Text, TextInput, View, SafeAreaView, StyleSheet, Keyboard, TouchableWithoutFeedback, Alert, Dimensions } from "react-native";
 import Logo from "../assets/logo.svg";
 
-export default function Login() {
+export default function Login({ navigation }) {
     const [user, onChangeUsername] = React.useState('');
     const [pass, onChangePassword] = React.useState('');
 
@@ -26,6 +26,7 @@ export default function Login() {
                         placeholder="Username"
                         />
                         <TextInput
+                        secureTextEntry={true}
                         style={styles.input}
                         onChangeText={onChangePassword}
                         value={pass}
@@ -40,7 +41,7 @@ export default function Login() {
                             <Text style={styles.button} onPress={() => Alert.alert("Log In")}>Log In</Text>
                         </TouchableWithoutFeedback>
                         <View style={{marginTop: 20}}>
-                            <Text>Don't have an account? <Text style={{color: "#1D3B2A", textDecorationLine: "underline"}} onPress={() => Alert.alert("Sign Up")}>Sign Up</Text>
+                            <Text>Don't have an account? <Text style={{color: "#1D3B2A", textDecorationLine: "underline"}} onPress={() => navigation.navigate("Signup")}>Sign Up</Text>
                             </Text>
                         </View>
                     </View>
