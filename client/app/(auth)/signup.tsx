@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React from "react";
 import { Platform, Text, TextInput, View, SafeAreaView, StyleSheet, Keyboard, TouchableWithoutFeedback, Alert, Dimensions } from "react-native";
 import Logo from "../assets/logo.svg";
+import axios from 'axios';
 
 export default function Signup({ navigation }) {
     const [firstName, onChangeFirstName] = React.useState('');
@@ -61,7 +62,7 @@ export default function Signup({ navigation }) {
                         placeholder="Re-enter Password" secureTextEntry={true}
                         />
                         <TouchableWithoutFeedback>
-                            <Text style={styles.button} onPress={() => Alert.alert("Sign Up")}>Sign Up</Text>
+                            <Text style={styles.button} onPress={() => {Alert.alert("Sign Up")}}>Sign Up</Text>
                         </TouchableWithoutFeedback>
                         <View style={{marginTop: 20}}>
                             <Text>Already have an account? <Text style={{color: "#1D3B2A", textDecorationLine: "underline"}} onPress={() => navigation.goBack()}>Log In</Text>

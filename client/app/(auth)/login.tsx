@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React from "react";
 import { Platform, Text, TextInput, View, SafeAreaView, StyleSheet, Keyboard, TouchableWithoutFeedback, Alert, Dimensions } from "react-native";
 import Logo from "../assets/logo.svg";
+import axios from 'axios';
 
 export default function Login({ navigation }) {
     const [user, onChangeUsername] = React.useState('');
@@ -44,7 +45,7 @@ export default function Login({ navigation }) {
                             </Text>
                         </TouchableWithoutFeedback>
                         <TouchableWithoutFeedback>
-                            <Text style={styles.button} onPress={() => Alert.alert("Log In")}>Log In</Text>
+                            <Text style={styles.button} onPress={() => {Alert.alert("Login")}}>Log In</Text>
                         </TouchableWithoutFeedback>
                         <View style={{marginTop: 20}}>
                             <Text>Don't have an account? <Text style={{color: "#1D3B2A", textDecorationLine: "underline"}} onPress={() => navigation.navigate("Signup")}>Sign Up</Text>
