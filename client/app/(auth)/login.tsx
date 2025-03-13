@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React from "react";
-import { Text, TextInput, View, SafeAreaView, StyleSheet, Keyboard, TouchableWithoutFeedback, Alert, Dimensions } from "react-native";
+import { Platform, Text, TextInput, View, SafeAreaView, StyleSheet, Keyboard, TouchableWithoutFeedback, Alert, Dimensions } from "react-native";
 import Logo from "../assets/logo.svg";
 
 export default function Login({ navigation }) {
@@ -10,7 +10,13 @@ export default function Login({ navigation }) {
     const {width} = Dimensions.get('screen');
 
     return (
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <TouchableWithoutFeedback 
+        onPress={() => {
+            if (Platform.OS !== 'web') {
+                Keyboard.dismiss();
+            }
+        }} 
+        accessible={false}>
             <SafeAreaView style={styles.safeArea}>
                 <View style={styles.container}>
                     {/* Logo Section */}
@@ -18,7 +24,7 @@ export default function Login({ navigation }) {
                         <Logo width={width * 0.5}/>
                     </View>
                     {/* Form Section */}
-                    <View style={[styles.formContainer, {width: width * 0.75, maxWidth: 400}]}>
+                    <View style={[styles.formContainer, {width: width * 0.8, maxWidth: 400}]}>
                         <TextInput
                         style={styles.input}
                         onChangeText={onChangeUsername}

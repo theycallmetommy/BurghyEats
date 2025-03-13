@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React from "react";
-import { Text, TextInput, View, SafeAreaView, StyleSheet, Keyboard, TouchableWithoutFeedback, Alert, Dimensions } from "react-native";
+import { Platform, Text, TextInput, View, SafeAreaView, StyleSheet, Keyboard, TouchableWithoutFeedback, Alert, Dimensions } from "react-native";
 import Logo from "../assets/logo.svg";
 
 export default function Signup({ navigation }) {
@@ -8,28 +8,35 @@ export default function Signup({ navigation }) {
     const [lastName, onChangeLastName] = React.useState('');
     const [user, onChangeUsername] = React.useState('');
     const [pass, onChangePassword] = React.useState('');
+    const [confirmPass, onChangeConfirmPassword] = React.useState('');
 
     const {width} = Dimensions.get('screen');
 
     return (
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <SafeAreaView style={styles.safeArea}>
+        <SafeAreaView style={styles.safeArea}>
+            <TouchableWithoutFeedback 
+            onPress={() => {
+                if (Platform.OS !== 'web') {
+                    Keyboard.dismiss();
+                }
+            }} 
+            accessible={false}>
                 <View style={styles.container}>
                     {/* Logo Section */}
                     <View style={styles.logoContainer}>
                         <Logo width={width * 0.5}/>
                     </View>
                     {/* Form Section */}
-                    <View style={[styles.formContainer, {width: width * 0.75, maxWidth: 400}]}>
-                        <View style={{flexDirection: 'row', width:'100%'}}>
+                    <View style={[styles.formContainer, {width: width * 0.8, maxWidth: 400}]}>
+                        <View style={{flexDirection: 'row', width:'100%', gap: 15}}>
                             <TextInput
-                            style={styles.input}
+                            style={[styles.input, {flex: 1}]}
                             onChangeText={onChangeFirstName}
                             value={firstName}
                             placeholder="First Name"
                             />
                             <TextInput
-                            style={styles.input}
+                            style={[styles.input, {flex: 1}]}
                             onChangeText={onChangeLastName}
                             value={lastName}
                             placeholder="Last Name"
@@ -47,17 +54,23 @@ export default function Signup({ navigation }) {
                         value={pass}
                         placeholder="Password" secureTextEntry={true}
                         />
+                        <TextInput
+                        style={styles.input}
+                        onChangeText={onChangeConfirmPassword}
+                        value={confirmPass}
+                        placeholder="Re-enter Password" secureTextEntry={true}
+                        />
                         <TouchableWithoutFeedback>
                             <Text style={styles.button} onPress={() => Alert.alert("Sign Up")}>Sign Up</Text>
                         </TouchableWithoutFeedback>
                         <View style={{marginTop: 20}}>
-                            <Text>Already have an account? <Text style={{color: "#1D3B2A", textDecorationLine: "underline"}} onPress={() => navigation.navigate("Login")}>Log In</Text>
+                            <Text>Already have an account? <Text style={{color: "#1D3B2A", textDecorationLine: "underline"}} onPress={() => navigation.goBack()}>Log In</Text>
                             </Text>
                         </View>
                     </View>
                 </View>
-            </SafeAreaView>
-        </TouchableWithoutFeedback>
+            </TouchableWithoutFeedback>
+        </SafeAreaView>
     );
 }
 
