@@ -2,3 +2,6 @@
 
 # Support for .svg files
 npm install -s react-native-svg
+
+# React Navigation
+npm install @react-navigation/native
