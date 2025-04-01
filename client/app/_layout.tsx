@@ -1,12 +1,12 @@
 import { Stack, Tabs } from 'expo-router';
 import { useState } from 'react';
-import Home from './(tabs)/home';
+import Home from './screens/(tabs)/home';
 
 
 export default function Layout() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-    return isAuthenticated ? (
-        <Tabs screenOptions={{ headerShown: false }}>
+            return isAuthenticated ? (
+    <Tabs screenOptions={{ headerShown: false }}>
             <Tabs.Screen name="./(tabs)/home" options={{ title: "Home", headerShown: false}} />
         </Tabs>
     ) : (

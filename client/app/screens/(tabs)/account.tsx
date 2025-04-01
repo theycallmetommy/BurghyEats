@@ -10,7 +10,7 @@ export default function Home() {
                 alignItems: "center",
             }}
         >
-            <Text>Edit app/(tabs)/home.tsx to edit this screen.</Text>
+            <Text>Edit app/(tabs)/account.tsx to edit this screen.</Text>
         </View>
     );
 }
