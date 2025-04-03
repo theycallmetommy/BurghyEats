@@ -1,9 +1,17 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import { ScrollView, Text, View } from "react-native";
 import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
 import {LocationCardView} from "../../components/cardView";
+import axios from "axios";
 
 export default function Home() {
+    const [data, setData] = useState([])
+
+    useEffect(() => {
+        fetch('api/menu',{method:'GET'})
+        .then(resp => resp.json())
+    }, [])
+
     return (
         <SafeAreaProvider>
             <SafeAreaView style={{ flex: 1 }}>

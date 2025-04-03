@@ -6,12 +6,18 @@ class User(models.Model):
     banner = models.CharField(max_length=9)
 
 class FoodShare(models.Model):
+    pfp = models.ImageField()
+    name = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=20)
     image = models.ImageField()
-    text = models.TextField()
+    desc = models.TextField()
 
 class FoodMenu(models.Model):
+    image = models.ImageField()
+    name = models.CharField(max_length=20)
     loc = models.CharField(max_length=20)
+    status = models.BooleanField()
+    hours = models.CharField(max_length=20)
 
 class FoodItem(models.Model):
     menu = models.ForeignKey(FoodMenu, on_delete=models.CASCADE)

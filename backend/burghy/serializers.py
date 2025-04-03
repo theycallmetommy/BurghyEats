@@ -9,12 +9,12 @@ class UserSerializer(serializers.ModelSerializer):
 class ShareSerializer(serializers.ModelSerializer):
     class Meta:
         model = FoodShare
-        fields = ('id', 'title', 'image', 'text')
+        fields = ('id', 'pfp', 'name', 'title', 'image', 'desc')
 
 class MenuSerializer(serializers.ModelSerializer):
     class Meta:
         model = FoodMenu
-        fields = ('id', 'loc')
+        fields = ('id', 'image', 'name', 'loc', 'status', 'hours')
 
 class ItemSerializer(serializers.ModelSerializer):
     class Meta:
