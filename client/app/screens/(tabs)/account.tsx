@@ -1,16 +1,16 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { Text, View , Image, ScrollView} from "react-native";
+import {SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
+import Feather from '@expo/vector-icons/Feather'
 
 export default function Home() {
     return (
-        <View
-            style={{
-                flex: 1,
-                justifyContent: "center",
-                alignItems: "center",
-            }}
-        >
-            <Text>Edit app/(tabs)/account.tsx to edit this screen.</Text>
-        </View>
+        <SafeAreaProvider>
+            <SafeAreaView>
+                <ScrollView>
+                    <Image source={{ uri: "https://avatar.iran.liara.run/public"}} width={150} height={150}/>
+                </ScrollView>
+            </SafeAreaView>
+        </SafeAreaProvider>
     );
 }
