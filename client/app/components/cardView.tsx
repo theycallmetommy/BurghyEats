@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity, Button } from 'react-native';
+import Feather  from "@expo/vector-icons/Feather";
 
 interface LocationCardProps {
     image: string;
@@ -15,7 +16,6 @@ interface FeedCardProps {
     username: string;
     postedAt?: string;
     image: string;
-    title: string;
     description?: string;
     onPress: () => void;
 }
@@ -23,28 +23,34 @@ interface FeedCardProps {
 const LocationCardView: React.FC<LocationCardProps> = ({ image, name, location, hours, open, onPress }) => {
     return (
         <TouchableOpacity onPress={onPress} style={styles.card}>
-            <Image source={{ uri: image}} style={styles.image} />
+            <Image source={{ uri: image}} style={[styles.image, {aspectRatio: 2/1}]} />
             <View style={styles.content}>
-                <Text style={styles.title}>{name}</Text>
-                <Text style={styles.title}>{location}</Text>
-                <Text style={styles.title}>{open ? "Open" : "Closed"} {hours && `• ${hours}`}</Text>
+                <Text style={[styles.defaultText, { fontWeight: 'bold', fontSize: 16}]}>{name}</Text>
+                <Feather name="map-pin" size={12} color="black"/>
+                <Text style={[styles.defaultText, { fontSize: 14}]}>{location}</Text>
+                <Text style={styles.defaultText}>{open ? "Open" : "Closed"} {hours && `• ${hours}`}</Text>
             </View>
         </TouchableOpacity>
     );
 };
 
-const FeedCardView: React.FC<FeedCardProps> = ({ pfp, username, postedAt, image, title, description, onPress }) => {
+const FeedCardView: React.FC<FeedCardProps> = ({ pfp, username, postedAt, image, description, onPress }) => {
   return (
       <TouchableOpacity onPress={onPress} style={styles.card}>
           <View style={{ flexDirection: 'row', padding: 10}}>
             <Image style={{ width: 40, height: 40, marginRight: 10}} source={{ uri: pfp}}/>
-            <Text>{username}</Text>
-            <Text>{postedAt}</Text>
+            <Text style={[styles.defaultText, { marginTop: 12, fontWeight: 'bold'}]}>{username}</Text>
+            <Text style={styles.defaultText}>{postedAt}</Text>
+          </View>
+          <View style={styles.content}>
+              <Text style={styles.defaultText}>{description}</Text>
           </View>
           <Image source={{ uri: image}} style={styles.image} />
-          <View style={styles.content}>
-              <Text style={styles.title}>{title}</Text>
-              <Text style={styles.title}>{description}</Text>
+          <View style={{
+            flexDirection: 'row',}}>
+            <Button title='Like'/>
+            <Button title='Chat'/>
+            <Button title='Comment'/>
           </View>
       </TouchableOpacity>
   );
@@ -66,14 +72,15 @@ const styles = StyleSheet.create({
     },
     image: {
       width: '100%',
-      height: 150,
+      aspectRatio: 3 / 3, // Maintain a 16:9 aspect ratio for the image
+      resizeMode: 'cover', // Cover the entire area of the image container
     },
     content: {
       padding: 10,
     },
-    title: {
-      fontSize: 18,
-      fontWeight: '600',
+    defaultText: {
+      fontSize: 15,
+      color: '#333',
       marginBottom: 5,
     },
     description: {
@@ -82,4 +89,4 @@ const styles = StyleSheet.create({
     },
   });
   
-export { LocationCardView, FeedCardView};
+export { LocationCardView, FeedCardView };
