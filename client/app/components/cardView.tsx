@@ -1,6 +1,10 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity, Button } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { Button } from 'react-native-elements';
 import Feather  from "@expo/vector-icons/Feather";
+import DynamicImage from './dynamicImageAR';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import TagList from './tagList';
 
 interface LocationCardProps {
     image: string;
@@ -17,7 +21,9 @@ interface FeedCardProps {
     postedAt?: string;
     image: string;
     description?: string;
-    onPress: () => void;
+    tags: string[];
+    likes: number;
+    comments: number;
 }
 
 const LocationCardView: React.FC<LocationCardProps> = ({ image, name, location, hours, open, onPress }) => {
@@ -34,27 +40,84 @@ const LocationCardView: React.FC<LocationCardProps> = ({ image, name, location, 
     );
 };
 
-const FeedCardView: React.FC<FeedCardProps> = ({ pfp, username, postedAt, image, description, onPress }) => {
+const FeedCardView: React.FC<FeedCardProps> = ({ pfp, username, postedAt, image, description, tags, likes, comments }) => {
   return (
-      <TouchableOpacity onPress={onPress} style={styles.card}>
-          <View style={{ flexDirection: 'row', padding: 10}}>
-            <Image style={{ width: 40, height: 40, marginRight: 10}} source={{ uri: pfp}}/>
-            <Text style={[styles.defaultText, { marginTop: 12, fontWeight: 'bold'}]}>{username}</Text>
-            <Text style={styles.defaultText}>{postedAt}</Text>
+      <View style={cardViewStyles.card}>
+          <View style={cardViewStyles.postInfo}>
+            <View style={{display: 'flex', flexDirection: 'row', gap: 10, alignItems: 'center'}}>
+              <DynamicImage width={40} uri={pfp}/>
+              <Text style={{fontSize: 16, fontWeight: 500}}>{username}</Text>
+            </View>
+            <Text style={{display: 'flex', justifyContent: 'flex-end', color: 'grey', fontWeight: 600}}>{postedAt}</Text>
           </View>
-          <View style={styles.content}>
-              <Text style={styles.defaultText}>{description}</Text>
+          <View style={{marginBottom: 15}}>
+              <Text style={{fontSize: 15}}>{description}</Text>
           </View>
-          <Image source={{ uri: image}} style={styles.image} />
-          <View style={{
-            flexDirection: 'row',}}>
-            <Button title='Like'/>
-            <Button title='Chat'/>
-            <Button title='Comment'/>
+          <DynamicImage uri={image}/>
+          <TagList tags={tags}/>
+          <View style={[cardViewStyles.buttonsContainer, {marginTop: 10}]}>
+            <Button
+              icon={
+                <MaterialCommunityIcons 
+                  name="heart-outline" 
+                  size={24}
+                  color="black"
+                />
+              }
+              buttonStyle={{backgroundColor: 'transparent', gap: 5}}
+              titleStyle={{color: 'black'}}
+              title={likes.toString()}
+            />
+            <Button 
+              icon={
+                <MaterialCommunityIcons 
+                  name="comment-outline" 
+                  size={24}
+                  color="black" 
+                />
+              }
+              buttonStyle={{backgroundColor: 'transparent', gap: 5}}
+              titleStyle={{color: 'black'}}
+              title={comments.toString()}
+            />
+            <Button 
+              icon={
+                <MaterialCommunityIcons 
+                  name="send-outline" 
+                  size={24}
+                  color="black" 
+                />
+              }
+              buttonStyle={{backgroundColor: 'transparent', gap: 5}}
+            />
           </View>
-      </TouchableOpacity>
+      </View>
   );
 };
+
+const cardViewStyles = StyleSheet.create({
+    card: {
+      display: 'flex',
+      backgroundColor: '#0000',
+      padding: 15,
+      marginLeft: 5,
+      marginRight: 5,
+      borderRadius: 15,
+    },
+    postInfo: {
+      display: 'flex',
+      flexDirection: 'row',
+      gap: 10,
+      marginBottom: 15,
+      alignItems: 'center',
+      justifyContent: 'space-between',
+    },
+    buttonsContainer: {
+      display: 'flex',
+      flexDirection: 'row',
+      gap: 5,
+    }
+});
 
 const styles = StyleSheet.create({
     card: {
@@ -87,6 +150,6 @@ const styles = StyleSheet.create({
       fontSize: 14,
       color: '#666',
     },
-  });
+});
   
 export { LocationCardView, FeedCardView };
