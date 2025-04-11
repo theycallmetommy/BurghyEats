@@ -12,3 +12,5 @@ npm install @react-navigation/bottom-tabs
 # Dependencies for styles and themes
 npm install --save @react-native-vector-icons/common
 npx expo install @expo-google-fonts/dev expo-font
+
+npm install react-native-elements
