@@ -6,11 +6,6 @@ client/node_modules/
 client/.expo/
 client/.expo-shared/
 
-backend/backend/*.pyc
-backend/backend/__pycache__/
-backend/backend/venv/
-backend/db.sqlite3
-
 # Python dependencies
 backend/venv/
 backend/backend/__pycache__/
