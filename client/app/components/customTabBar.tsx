@@ -6,13 +6,11 @@ Modifications were made, but the base code is from the documentation.
 */
 
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
-import { useTheme } from '@react-navigation/native';
 import { Text } from '@react-navigation/elements';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 function CustomTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
-    const { colors } = useTheme();
 
     const getIcon = (routeName: string, isFocused: boolean) => {
         switch (routeName) {
@@ -67,15 +65,15 @@ function CustomTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
             onPress={onPress}
             onLongPress={onLongPress}
             style={{
-                backgroundColor: '#CF7F00',
+                backgroundColor: '#FFFFFF',
                 flex: 1,
                 alignItems: 'center',
                 justifyContent: 'center',
             }}
           >
             <View style={{ alignItems: 'center' }}>
-              <MaterialCommunityIcons name={iconName as keyof typeof MaterialCommunityIcons.glyphMap} size={24} color={isFocused ? '#00000' : '#EEECEB'} />
-              <Text style={{ color: isFocused ? colors.primary : colors.text }}>
+              <MaterialCommunityIcons name={iconName} size={24} color={isFocused ? '#CF102D' : '#000'} />
+              <Text style={{ color: isFocused ? '#CF102D' : '#000' }}>
                 {typeof label === 'string' ? label : null}
               </Text>
             </View>
@@ -88,15 +86,9 @@ function CustomTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
 
 const styles = StyleSheet.create({
     tabBar: {
-        position: 'absolute',
-        bottom: 30,
-        left: 15,
-        right: 15,
+        position: 'relative',
         flexDirection: 'row',
-        backgroundColor: '#EEECEB',
         height: 100,
-        borderRadius: 30,
-        overflow: 'hidden',
     },
 });
 
