@@ -3,9 +3,10 @@ import { ScrollView, View, Text, StyleSheet, NativeSyntheticEvent, NativeScrollE
 
 interface TagListProps {
   tags: string[];
+  scrollOverflow?: boolean;
 }
 
-const TagList: React.FC<TagListProps> = ({ tags }) => {
+const TagList: React.FC<TagListProps> = ({ tags, scrollOverflow = true }) => {
   const [atEnd, setAtEnd] = useState(false);
   const scrollRef = useRef<ScrollView>(null);
 
@@ -17,7 +18,7 @@ const TagList: React.FC<TagListProps> = ({ tags }) => {
   };
 
   return (
-    <View style={{ marginHorizontal: -20 }}>
+    <View style={scrollOverflow ? { marginHorizontal: -20 } : undefined}>
       <ScrollView
         ref={scrollRef}
         horizontal
@@ -25,8 +26,8 @@ const TagList: React.FC<TagListProps> = ({ tags }) => {
         onScroll={handleScroll}
         scrollEventThrottle={16}
         contentContainerStyle={{
-          paddingLeft: 20,
-          paddingRight: atEnd ? 20 : 0, // Add margin only when scrolled to end
+          paddingLeft: scrollOverflow ? 20 : 0,
+          paddingRight: scrollOverflow && atEnd ? 20 : 0, // Add margin only when scrolled to end
         }}
       >
         {tags.map((tag, index) => (
@@ -34,7 +35,7 @@ const TagList: React.FC<TagListProps> = ({ tags }) => {
             key={index}
             style={[
               styles.tag,
-              { marginRight: index === tags.length - 1 ? 0 : 10 },
+              { marginRight: index === tags.length - 1 ? 0 : 10, marginTop: scrollOverflow ? 15: 0 },
             ]}
           >
             <Text style={styles.tagText}>{tag}</Text>
@@ -54,7 +55,6 @@ const styles = StyleSheet.create({
         padding: 8,
         paddingLeft: 15,
         paddingRight: 15,
-        marginTop: 15,
     },
     tagText: {
         fontSize: 14,
