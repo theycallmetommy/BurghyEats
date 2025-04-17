@@ -26,7 +26,7 @@ type Menu = {
     hours: string;
 }
 
-const dbtest = [[{"id":1,"name":"Kent Cafe","loc":"Kent Hall","status":true,"hours":"11am-5pm"},{"id":2,"name":"Einstein Bros","loc":"Hawkins Hall","status":false,"hours":"9am-3pm"}]]
+const dbtest = [{"id":1,"name":"Kent Cafe","loc":"Kent Hall","status":true,"hours":"11am-5pm"},{"id":2,"name":"Einstein Bros","loc":"Hawkins Hall","status":false,"hours":"9am-3pm"},{"id":3,"name":"Halal Shack","loc":"Burghy's Den","status":true,"hours":"11am-7:30pm"}]
 
 const locations = [
     {
@@ -102,7 +102,7 @@ export default function Home() {
             <SafeAreaView style={{ flex: 1 }}>
                 <ScrollView style={{flexGrow: 1}}>
                     <View style={{display: 'flex', gap: 15}}>
-                        {dbtest.map((menu) => (
+                        {menus.map((menu) => (
                             <LocationCardView
                                 key={menu.id}
                                 name = {menu.name}
