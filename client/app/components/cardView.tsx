@@ -1,7 +1,6 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableHighlight } from 'react-native';
 import { Button } from 'react-native-elements';
-import Feather  from "@expo/vector-icons/Feather";
 import DynamicImage from './dynamicImageAR';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import TagList from './tagList';
@@ -26,17 +25,51 @@ interface FeedCardProps {
     comments: number;
 }
 
+const DBLocationCardView = ({ menu, onPress }) => {
+  return (
+      <TouchableHighlight onPress={onPress} style={[cardViewStyles.cardMini]}>
+          <View style={[diningStyles.cardContent]}>
+            <Image style={{aspectRatio: 2/1, width: '100%'}} source={{ uri: menu.image}} />
+            <View style={diningStyles.infoBox}>
+                <View style={[diningStyles.detailsBox, {marginTop: 0, marginBottom: 0, gap: 10,}]}>
+                  <Text style={{fontWeight: 700, fontSize: 19}}>{menu.name}</Text>
+                  <Text style={{color: '#8C8279'}}>
+                    <MaterialCommunityIcons name="map-marker-outline" size={12} color="#8C8279"/> {menu.loc} 
+                  </Text>
+                </View>
+                <View style={diningStyles.detailsBox}>
+                  <MaterialCommunityIcons name="star" size={12} color="black" style={diningStyles.review}/>
+                  <Text style={diningStyles.review}>4.99</Text>
+                  <Text style={[diningStyles.review, {color: '#8C8279', fontWeight: 400, marginLeft: 5}]}>(271 reviews)</Text>
+                </View>
+                <TagList tags={["Sandwich", "Soup"]} scrollOverflow={false}/>
+            </View>
+          </View>
+      </TouchableHighlight>
+  );
+};
+
 const LocationCardView: React.FC<LocationCardProps> = ({ image, name, location, hours, open, onPress }) => {
     return (
-        <TouchableOpacity onPress={onPress} style={styles.card}>
-            <Image source={{ uri: image}} style={[styles.image, {aspectRatio: 2/1}]} />
-            <View style={styles.content}>
-                <Text style={[styles.defaultText, { fontWeight: 'bold', fontSize: 16}]}>{name}</Text>
-                <Feather name="map-pin" size={12} color="black"/>
-                <Text style={[styles.defaultText, { fontSize: 14}]}>{location}</Text>
-                <Text style={styles.defaultText}>{open ? "Open" : "Closed"} {hours && `• ${hours}`}</Text>
+        <TouchableHighlight onPress={onPress} style={[cardViewStyles.cardMini]}>
+            <View style={[diningStyles.cardContent]}>
+              <Image style={{aspectRatio: 2/1, width: '100%'}} source={{ uri: image}} />
+              <View style={diningStyles.infoBox}>
+                  <View style={[diningStyles.detailsBox, {marginTop: 0, marginBottom: 0, gap: 10,}]}>
+                    <Text style={{fontWeight: 700, fontSize: 19}}>{name}</Text>
+                    <Text style={{color: '#8C8279'}}>
+                      <MaterialCommunityIcons name="map-marker-outline" size={12} color="#8C8279"/> {location} 
+                    </Text>
+                  </View>
+                  <View style={diningStyles.detailsBox}>
+                    <MaterialCommunityIcons name="star" size={12} color="black" style={diningStyles.review}/>
+                    <Text style={diningStyles.review}>4.99</Text>
+                    <Text style={[diningStyles.review, {color: '#8C8279', fontWeight: 400, marginLeft: 5}]}>(271 reviews)</Text>
+                  </View>
+                  <TagList tags={["Sandwich", "Soup"]} scrollOverflow={false}/>
+              </View>
             </View>
-        </TouchableOpacity>
+        </TouchableHighlight>
     );
 };
 
@@ -104,6 +137,13 @@ const cardViewStyles = StyleSheet.create({
       marginRight: 5,
       borderRadius: 15,
     },
+    cardMini: {
+      padding: 0,
+      marginLeft: 10,
+      marginRight: 10,
+      borderRadius: 10,
+      overflow: 'hidden',
+    },
     postInfo: {
       display: 'flex',
       flexDirection: 'row',
@@ -119,37 +159,35 @@ const cardViewStyles = StyleSheet.create({
     }
 });
 
-const styles = StyleSheet.create({
-    card: {
-      backgroundColor: '#fff',
-      borderRadius: 10,
-      overflow: 'hidden',
-      margin: 10,
-      // iOS shadow
-      shadowColor: '#000',
-      shadowOpacity: 0.2,
-      shadowRadius: 4,
-      shadowOffset: { width: 0, height: 2 },
-      // Android shadow
-      elevation: 3,
-    },
-    image: {
-      width: '100%',
-      aspectRatio: 3 / 3, // Maintain a 16:9 aspect ratio for the image
-      resizeMode: 'cover', // Cover the entire area of the image container
-    },
-    content: {
-      padding: 10,
-    },
-    defaultText: {
-      fontSize: 15,
-      color: '#333',
-      marginBottom: 5,
-    },
-    description: {
-      fontSize: 14,
-      color: '#666',
-    },
+const diningStyles = StyleSheet.create({
+  infoBox: {
+    width: '100%',
+    padding: 20,
+    paddingLeft: 20,
+    marginTop: -20,
+    backgroundColor: '#EEECEB',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+  },
+  cardContent: {
+    display: 'flex',
+    flexDirection: 'column',
+    flex: 1,
+    borderRadius: 20,
+    overflow: 'hidden',
+  },
+  detailsBox: {
+    display: 'flex',
+    flexDirection: 'row',
+    gap: 3,
+    alignItems: 'center',
+    marginTop: 10,
+    marginBottom: 15,
+  },
+  review: {
+    fontSize: 15,
+    fontWeight: 600,
+  }
 });
   
-export { LocationCardView, FeedCardView };
+export { LocationCardView, FeedCardView, DBLocationCardView };

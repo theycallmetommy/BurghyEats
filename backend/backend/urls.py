@@ -24,6 +24,7 @@ router.register(r'user', views.UserView, 'user')
 router.register(r'foodshare', views.ShareView, 'foodshare')
 router.register(r'menu', views.MenuView, 'menu')
 router.register(r'fooditem', views.ItemView, 'fooditem')
+router.register(r'work', views.WorkView, 'work')
 
 
 urlpatterns = [

@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import viewsets
-from .serializers import UserSerializer, ShareSerializer, MenuSerializer, ItemSerializer
-from .models import User, FoodShare, FoodMenu, FoodItem
+from .serializers import UserSerializer, ShareSerializer, MenuSerializer, ItemSerializer, MenuWorkSerializer
+from .models import User, FoodShare, FoodMenu, FoodItem, MenuPleaseWork
 
 # Create your views here.
 
@@ -16,6 +16,10 @@ class ShareView(viewsets.ModelViewSet):
 class MenuView(viewsets.ModelViewSet):
     serializer_class = MenuSerializer
     queryset = FoodMenu.objects.all()
+
+class WorkView(viewsets.ModelViewSet):
+    serializer_class = MenuWorkSerializer
+    queryset = MenuPleaseWork.objects.all()
 
 class ItemView(viewsets.ModelViewSet):
     serializer_class = ItemSerializer

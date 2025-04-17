@@ -19,6 +19,12 @@ class FoodMenu(models.Model):
     status = models.BooleanField()
     hours = models.CharField(max_length=20)
 
+class MenuPleaseWork(models.Model):
+    name = models.CharField(max_length=20)
+    loc = models.CharField(max_length=20)
+    status = models.BooleanField()
+    hours = models.CharField(max_length=20)
+
 class FoodItem(models.Model):
     menu = models.ForeignKey(FoodMenu, on_delete=models.CASCADE)
     name = models.CharField(max_length=20)
