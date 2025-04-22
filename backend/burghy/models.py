@@ -21,7 +21,7 @@ class FoodMenu(models.Model):
 
 class MenuPleaseWork(models.Model):
     image = models.CharField(max_length=100)
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=30)
     loc = models.CharField(max_length=20)
     status = models.BooleanField()
     hours = models.CharField(max_length=20)
