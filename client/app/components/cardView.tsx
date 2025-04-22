@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, Image, StyleSheet, TouchableHighlight } from 'react-native';
+import React, {useState} from 'react';
+import { View, Text, Image, StyleSheet, TouchableHighlight, TouchableOpacity } from 'react-native';
 import { Button } from 'react-native-elements';
 import DynamicImage from './dynamicImageAR';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -25,29 +25,28 @@ interface FeedCardProps {
     comments: number;
 }
 
-const DBLocationCardView = ({ menu, onPress }) => {
-  return (
-      <TouchableHighlight onPress={onPress} style={[cardViewStyles.cardMini]}>
-          <View style={[diningStyles.cardContent]}>
-            <Image style={{aspectRatio: 2/1, width: '100%'}} source={{ uri: menu.image}} />
-            <View style={diningStyles.infoBox}>
-                <View style={[diningStyles.detailsBox, {marginTop: 0, marginBottom: 0, gap: 10,}]}>
-                  <Text style={{fontWeight: 700, fontSize: 19}}>{menu.name}</Text>
-                  <Text style={{color: '#8C8279'}}>
-                    <MaterialCommunityIcons name="map-marker-outline" size={12} color="#8C8279"/> {menu.loc} 
-                  </Text>
-                </View>
-                <View style={diningStyles.detailsBox}>
-                  <MaterialCommunityIcons name="star" size={12} color="black" style={diningStyles.review}/>
-                  <Text style={diningStyles.review}>4.99</Text>
-                  <Text style={[diningStyles.review, {color: '#8C8279', fontWeight: 400, marginLeft: 5}]}>(271 reviews)</Text>
-                </View>
-                <TagList tags={["Sandwich", "Soup"]} scrollOverflow={false}/>
-            </View>
-          </View>
-      </TouchableHighlight>
-  );
-};
+interface OrderCardProps {
+  orderId: string;
+  delivery: boolean;
+  readyAt: string;
+  location: string;
+  orderStatus: string;
+  orderDate: string;
+  orderTotal: string;
+  items: OrderItem[];
+}
+
+interface OrderItem {
+  name: string;
+  qty: number;
+  price: number;
+}
+
+interface WalletInfo {
+  name: string,
+  balance: number,
+  mealSwipe?: boolean
+}
 
 const LocationCardView: React.FC<LocationCardProps> = ({ image, name, location, hours, open, onPress }) => {
     return (
@@ -128,6 +127,68 @@ const FeedCardView: React.FC<FeedCardProps> = ({ pfp, username, postedAt, image,
   );
 };
 
+const OrderCardView: React.FC<OrderCardProps> = ({ orderId, location, delivery, readyAt, orderStatus, orderDate, orderTotal, items }) => {
+  const [expanded, setExpanded] = useState(false);
+  
+  return (
+      <View style={orderCardStyles.card}>
+        <View style={{flexDirection: 'row', gap: 15}}>
+          <View>
+            <Image style={{width: 100, aspectRatio: 1, borderRadius: 10}} source={{uri: "https://images.compassdigital.org/424a9b5e4c7947eb9a04655f5903fe551728490601342.png"}}/>
+          </View>
+          <View>
+            <Text style={{fontSize: 15, fontWeight: 700, }}>{location}</Text>
+            <View style={{flexDirection: 'row', gap: 15}}>
+              <Text>{delivery? 'Delivery' : 'Pickup'}</Text>
+              <Text>{readyAt}</Text>
+            </View>
+          </View>
+        </View>
+
+        {/* Acts as an accordion */}
+        <TouchableOpacity
+          onPress={() => setExpanded((e) => !e)}
+          style={orderCardStyles.accordion}
+        >
+          <Text>
+            {expanded
+              ? 'Hide items'
+              : `${items.length} item${items.length > 1 ? 's' : ''}`
+            }
+          </Text>
+        </TouchableOpacity>
+
+        {/* Becomes visible once onPress() from Touchable above is triggered */}
+        {expanded && (
+          <View style={{marginTop: 15}}>
+            {items.map((item, i) => (
+              <View key={i} style={orderCardStyles.expanded}>
+                <Text>x{item.qty}</Text>
+                <Text>{item.name}</Text>
+                <Text style={{marginLeft: 'auto'}}>$ {item.price}</Text>
+              </View>
+            ))}
+          </View>
+        )}
+
+        <Text style={{fontSize: 15, marginTop: 10}}>Total: {orderTotal}</Text>
+      </View>
+  );
+};
+
+const WalletCard: React.FC<WalletInfo> = ({ name, balance, mealSwipe }) => {
+  return (
+    <View style={walletStyles.card}>
+      <Text style={walletStyles.title}>{name}</Text>
+      <Text>Balance: ${balance.toFixed(2)}</Text>
+      <View>
+        <Button title={mealSwipe? 'Change Plan' : 'Add money'}/>
+      </View>
+    </View>
+  );
+};
+
+// Styles
 const cardViewStyles = StyleSheet.create({
     card: {
       display: 'flex',
@@ -189,5 +250,35 @@ const diningStyles = StyleSheet.create({
     fontWeight: 600,
   }
 });
+
+const orderCardStyles = StyleSheet.create({
+  card: {
+    padding: 15,
+    borderRadius: 15
+  },
+  accordion: {
+    backgroundColor: '#CF7F00',
+    marginTop: 15,
+    padding: 12,
+    borderRadius: 8
+  },
+  expanded: {
+    flexDirection: 'row',
+    gap: 5
+
+  },
+});
+
+const walletStyles = StyleSheet.create({
+  card: {
+    backgroundColor: 'red',
+    width: 300,
+    aspectRatio: 3/2,
+  },
+  title: {
+    fontSize: 18,
+    justifyContent: 'center'
+  }
+});
   
-export { LocationCardView, FeedCardView, DBLocationCardView };
+export { LocationCardView, FeedCardView, OrderCardView, WalletCard };
