@@ -14,7 +14,7 @@ class ItemAdmin(admin.ModelAdmin):
     list_display = ('menu', 'name', 'image')
 
 class WorkAdmin(admin.ModelAdmin):
-    list_display = ('name', 'loc', 'status', 'hours')
+    list_display = ('image', 'name', 'loc', 'status', 'hours')
 
 # Register your models here.
 admin.site.register(User, UserAdmin)

@@ -19,7 +19,7 @@ class MenuSerializer(serializers.ModelSerializer):
 class MenuWorkSerializer(serializers.ModelSerializer):
     class Meta:
         model = MenuPleaseWork
-        fields = ('id', 'name', 'loc', 'status', 'hours')
+        fields = ('id','image', 'name', 'loc', 'status', 'hours')
 
 class ItemSerializer(serializers.ModelSerializer):
     class Meta:
