@@ -4,6 +4,7 @@ import { Button } from 'react-native-elements';
 import DynamicImage from './dynamicImageAR';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import TagList from './tagList';
+import OrderProgressBar from './orderProgressBar';
 
 interface LocationCardProps {
     image: string;
@@ -45,7 +46,9 @@ interface OrderItem {
 interface WalletInfo {
   name: string,
   balance: number,
-  mealSwipe?: boolean
+  mealSwipe?: boolean,
+  onPress: () => void,
+  icon: string
 }
 
 const LocationCardView: React.FC<LocationCardProps> = ({ image, name, location, hours, open, onPress }) => {
@@ -136,12 +139,15 @@ const OrderCardView: React.FC<OrderCardProps> = ({ orderId, location, delivery, 
           <View>
             <Image style={{width: 100, aspectRatio: 1, borderRadius: 10}} source={{uri: "https://images.compassdigital.org/424a9b5e4c7947eb9a04655f5903fe551728490601342.png"}}/>
           </View>
-          <View>
+          <View style={{ flex: 1 }}>
             <Text style={{fontSize: 15, fontWeight: 700, }}>{location}</Text>
             <View style={{flexDirection: 'row', gap: 15}}>
               <Text>{delivery? 'Delivery' : 'Pickup'}</Text>
               <Text>{readyAt}</Text>
             </View>
+            {orderStatus !== 'delivered' && (
+              <OrderProgressBar currentStatus={orderStatus} delivery={delivery} />
+            )}
           </View>
         </View>
 
@@ -171,22 +177,33 @@ const OrderCardView: React.FC<OrderCardProps> = ({ orderId, location, delivery, 
           </View>
         )}
 
-        <Text style={{fontSize: 15, marginTop: 10}}>Total: {orderTotal}</Text>
+        <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 15, alignItems: 'center'}}>
+          <Text style={{fontSize: 15}}>Total: {orderTotal}</Text>
+          <TouchableOpacity style={[walletStyles.button, {position: 'relative', margin: 0}]}>
+            <Text>Order Again</Text>
+          </TouchableOpacity>
+        </View>
       </View>
   );
 };
 
-const WalletCard: React.FC<WalletInfo> = ({ name, balance, mealSwipe }) => {
+const WalletCard: React.FC<WalletInfo> = ({ name, balance, mealSwipe, onPress, icon }) => {
   return (
     <View style={walletStyles.card}>
-      <Text style={walletStyles.title}>{name}</Text>
-      <Text>Balance: ${balance.toFixed(2)}</Text>
-      <View>
-        <Button title={mealSwipe? 'Change Plan' : 'Add money'}/>
+      <View style={{alignItems: 'center'}}>
+        <Text style={walletStyles.title}>{name} Balance</Text>
       </View>
+      <View>
+        <Text style={{fontSize: 28, marginLeft: 25}}>${balance.toFixed(2)}</Text>
+      </View>
+      <TouchableOpacity style={[walletStyles.button, {flexDirection: 'row', alignItems: 'center', gap: 5}]} onPress={onPress}>
+        <MaterialCommunityIcons name={icon} size={24} color="black" />
+        <Text>{mealSwipe? 'Change Plan' : 'Add money'}</Text>
+      </TouchableOpacity>
     </View>
   );
 };
+
 
 // Styles
 const cardViewStyles = StyleSheet.create({
@@ -254,7 +271,8 @@ const diningStyles = StyleSheet.create({
 const orderCardStyles = StyleSheet.create({
   card: {
     padding: 15,
-    borderRadius: 15
+    borderRadius: 15,
+    backgroundColor: '#dee1e1'
   },
   accordion: {
     backgroundColor: '#CF7F00',
@@ -271,13 +289,27 @@ const orderCardStyles = StyleSheet.create({
 
 const walletStyles = StyleSheet.create({
   card: {
-    backgroundColor: 'red',
     width: 300,
     aspectRatio: 3/2,
+    borderRadius: 15,
+    backgroundColor: '#c5cbc9'
   },
   title: {
-    fontSize: 18,
-    justifyContent: 'center'
+    fontSize: 16,
+    justifyContent: 'center',
+    marginTop: 20,
+    marginBottom: 20,
+  },
+  button: {
+    position: 'absolute',
+    backgroundColor: 'orange', 
+    padding: 15, 
+    paddingLeft: 15,
+    paddingRight: 15,
+    alignSelf: 'flex-start',
+    bottom: 0,
+    margin: 25,
+    borderRadius: 10
   }
 });
   

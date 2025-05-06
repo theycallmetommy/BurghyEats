@@ -14,3 +14,8 @@ npm install --save @react-native-vector-icons/common
 npx expo install @expo-google-fonts/dev expo-font
 
 npm install react-native-elements
+
+# Divider
+npm install @rneui/themed
+
+npm install react-router-dom

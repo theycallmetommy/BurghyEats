@@ -2,25 +2,46 @@ import React, { useState } from "react";
 import { Text, View, Image, ScrollView, StyleSheet, TouchableOpacity } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 import { OrderCardView, WalletCard } from "../../components/cardView";
+import { Divider } from '@rneui/themed';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
+
+import MealPlanSelector from "../../components/mealPlanSelector";
+import DepositBox from "../../components/depositBox";
+import PopupCard from "../../components/popupCard";
+
+const router = useRouter();
 
 export default function Account() {
-    const [activeTab, setActiveTab] = useState<'Orders' | 'Wallet' | 'Settings'>('Wallet');
+    const [activeTab, setActiveTab] = useState<'Orders' | 'Wallet'>('Wallet');
     const exampleItems = [
         { name: 'Sandwich', qty: 2, price: 5.99 },
         { name: 'Salad',    qty: 1, price: 4.49 }
       ];
+
+      const [popupVisible, setPopupVisible] = useState(false);
+      const [popupType, setPopupType] = useState<'addPayment' | 'deposit' | 'changeMealPlan' | null>(null);
+      
+      const openPopup = (type: 'addPayment' | 'deposit' | 'changeMealPlan') => {
+        setPopupType(type);
+        setPopupVisible(true);
+      };
 
     return (
         <SafeAreaProvider>
             <SafeAreaView style={{ flex: 1 }}>
                 <View style={[style.infoContainer, {padding: 20}]}>
                     <Image source={{ uri: "https://avatar.iran.liara.run/public" }} width={65} height={65} />
-                    <Text style={{ fontSize: 25, fontWeight: '600' }}>John Doe</Text>
+                    <View>
+                        <Text style={{ fontSize: 25, fontWeight: '600' }}>John Doe</Text>
+                        <Text style={{textDecorationLine: 'underline', textDecorationColor: 'blue', color: 'blue'}}>SUNY Plattsburgh</Text>
+
+                    </View>
                 </View>
 
                 {/* Top Tabs */}
                 <View style={style.tabNav}>
-                    {['Orders', 'Wallet', 'Settings'].map(tab => (
+                    {['Orders', 'Wallet'].map(tab => (
                         <TouchableOpacity
                             key={tab}
                             onPress={() => setActiveTab(tab as any)}
@@ -48,9 +69,9 @@ export default function Account() {
                                 <OrderCardView
                                 orderId="123456"
                                 location="Kent Cafe"
-                                delivery={true}
+                                delivery={false}
                                 readyAt="2023-10-01"
-                                orderStatus="Delivered"
+                                orderStatus="delivered"
                                 orderDate="2023-10-01"
                                 orderTotal="$10.48"
                                 items={exampleItems}
@@ -58,9 +79,9 @@ export default function Account() {
                                 <OrderCardView
                                 orderId="123456"
                                 location="Einstein Bros"
-                                delivery={true}
+                                delivery={false}
                                 readyAt="2023-10-01"
-                                orderStatus="Delivered"
+                                orderStatus="picked"
                                 orderDate="2023-10-01"
                                 orderTotal="$10.48"
                                 items={exampleItems}
@@ -68,9 +89,9 @@ export default function Account() {
                                 <OrderCardView
                                 orderId="123456"
                                 location="Halal Shack"
-                                delivery={true}
+                                delivery={false}
                                 readyAt="2023-10-01"
-                                orderStatus="Delivered"
+                                orderStatus="preparing"
                                 orderDate="2023-10-01"
                                 orderTotal="$10.48"
                                 items={exampleItems}
@@ -80,7 +101,7 @@ export default function Account() {
                                 location="Platts Pizza"
                                 delivery={true}
                                 readyAt="2023-10-01"
-                                orderStatus="Delivered"
+                                orderStatus="placed"
                                 orderDate="2023-10-01"
                                 orderTotal="$10.48"
                                 items={exampleItems}
@@ -90,7 +111,7 @@ export default function Account() {
                                 location="Tim Hortons"
                                 delivery={true}
                                 readyAt="2023-10-01"
-                                orderStatus="Delivered"
+                                orderStatus="delivered"
                                 orderDate="2023-10-01"
                                 orderTotal="$10.48"
                                 items={exampleItems}
@@ -98,28 +119,78 @@ export default function Account() {
                             </View>
                         }
                         {
-                            activeTab === 'Wallet' && 
-                            <ScrollView horizontal={true}>
-                                <View style={{flexDirection: 'row', gap: 15}}>
-                                    <WalletCard
-                                        name="Meal Swipes"
-                                        balance={100}
-                                        mealSwipe
-                                    />
-                                    <WalletCard
-                                        name="Dining Dollars"
-                                        balance={503.02}
-                                    />
-                                    <WalletCard
-                                        name="Cardinal Cash"
-                                        balance={0}
-                                    />
+                            activeTab === 'Wallet' &&
+                            <View>
+                                <ScrollView horizontal={true}>
+                                    <View style={{flexDirection: 'row', gap: 15}}>
+                                        <WalletCard
+                                            name="Meal Swipes"
+                                            balance={100}
+                                            mealSwipe
+                                            onPress={() => openPopup('changeMealPlan')}
+                                            icon="swap-horizontal"
+                                        />
+                                        <WalletCard
+                                            name="Dining Dollars"
+                                            balance={503.02}
+                                            onPress={() => openPopup('deposit')}
+                                            icon="plus"
+                                        />
+                                        <WalletCard
+                                            name="Cardinal Cash"
+                                            balance={0}
+                                            onPress={() => openPopup('changeMealPlan')}
+                                            icon="plus"
+                                        />
+                                    </View>
+                                </ScrollView>
+                                <View>
+                                    <Text style={{fontSize: 20, fontWeight: 600, marginTop: 15, marginBottom: 15}}>Payment Methods</Text>
+                                    <View style={style.list}>
+                                        <TouchableOpacity
+                                            style={{ backgroundColor: 'lightgrey', flexDirection: 'row', justifyContent: "space-between", alignItems: 'center', padding: 15}}>
+                                            <Text>Campus Card</Text>
+                                            <MaterialCommunityIcons name="chevron-right" size={20}/>
+                                        </TouchableOpacity>
+                                        <Divider width={2.5} />
+                                        <TouchableOpacity style={{ backgroundColor: 'lightgrey', flexDirection: 'row', justifyContent: "space-between", alignItems: 'center', padding: 15}}>
+                                            <Text>Visa ****2646</Text>
+                                            <MaterialCommunityIcons name="chevron-right" size={20}/>
+                                        </TouchableOpacity>
+                                        <Divider width={2.5} />
+                                        <TouchableOpacity style={{ backgroundColor: 'lightgrey', flexDirection: 'row', justifyContent: "space-between", alignItems: 'center', padding: 15}}>
+                                            <Text>Amex ****4534</Text>
+                                            <MaterialCommunityIcons name="chevron-right" size={20}/>
+                                        </TouchableOpacity>
+                                        <Divider width={2.5} />
+                                        <TouchableOpacity style={{ backgroundColor: 'lightgrey', flexDirection: 'row', justifyContent: "space-between", alignItems: 'center', padding: 15}}>
+                                            <Text>Discover ****6635</Text>
+                                            <MaterialCommunityIcons name="chevron-right" size={20}/>
+                                        </TouchableOpacity>
+                                        <Divider width={2.5} />
+                                        <TouchableOpacity style={{ backgroundColor: 'lightgrey', flexDirection: 'row', justifyContent: "space-between", alignItems: 'center', padding: 15}}>
+                                            <Text>Mastercard ****8753</Text>
+                                            <MaterialCommunityIcons name="chevron-right" size={20}/>
+                                        </TouchableOpacity>
+                                    </View>
+                                    <TouchableOpacity style={[style.button, {flexDirection: 'row', alignItems: 'center', gap: 5}]}>
+                                        <MaterialCommunityIcons name="plus" size={24} color="black" />
+                                        <Text>Add payment method</Text>
+                                    </TouchableOpacity>
                                 </View>
-                            </ScrollView>
+
+                            </View>
                         }
-                        {activeTab === 'Settings' && <Text>Your Settings go here</Text>}
                     </View>
                 </ScrollView>
+
+                {popupVisible && (
+                    <PopupCard visible={popupVisible} onClose={() => setPopupVisible(false)}>
+                        {popupType === 'changeMealPlan' && <MealPlanSelector />}
+                        {popupType === 'deposit' && <DepositBox />}
+                    </PopupCard>
+                )}
+
             </SafeAreaView>
         </SafeAreaProvider>
     );
@@ -127,15 +198,15 @@ export default function Account() {
 
 const style = StyleSheet.create({
     infoContainer: {
-        flexDirection: 'row',
+        flexDirection: 'column',
         alignItems: 'center',
+        justifyContent: 'center',
         gap: 15,
-        marginBottom: 20
+        marginBottom: 5
     },
     tabNav: {
         flexDirection: 'row',
         justifyContent: 'space-around',
-        marginBottom: 15
     },
     tabButton: {
         paddingVertical: 10,
@@ -156,5 +227,20 @@ const style = StyleSheet.create({
     },
     tabContent: {
         padding: 15
+    },
+    list: {
+        fontSize: 5,
+        borderRadius: 10,
+        overflow: 'hidden'
+    },
+    button: {
+        backgroundColor: 'orange', 
+        padding: 15, 
+        paddingLeft: 15,
+        paddingRight: 15,
+        alignSelf: 'flex-start',
+        bottom: 0,
+        marginTop: 15,
+        borderRadius: 10
     }
 });
