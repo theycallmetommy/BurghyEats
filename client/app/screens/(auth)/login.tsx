@@ -1,13 +1,32 @@
 import { StatusBar } from 'expo-status-bar';
-import React from "react";
-import { Platform, Text, TextInput, View, SafeAreaView, StyleSheet, Keyboard, TouchableWithoutFeedback, Alert, Dimensions } from "react-native";
-import Logo from "../../assets/logo.svg";
+import React, { useEffect } from "react";
+import { Platform, Text, TextInput, View, SafeAreaView, StyleSheet, Keyboard, TouchableWithoutFeedback, Alert, Dimensions, TouchableOpacity } from "react-native";
+import Logo from "../../assets/roost.svg";
+import axios from 'axios';
+
+//axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('token')}`
 
 export default function Login({ navigation }) {
     const [user, onChangeUsername] = React.useState('');
     const [pass, onChangePassword] = React.useState('');
+    const [buttontext, setButtonText] = React.useState("Log in")
 
     const {width} = Dimensions.get('screen');
+
+    const handleLogin = async () => {
+        setButtonText("Loading...")
+        try {
+            const response = await axios.post('http://127.0.0.1:8000/auth/login', {
+                username:user,
+                password:pass,
+            });
+            localStorage.setItem('token',response.data.access);
+            navigation.navigate("Menu");
+        } catch (error) {
+            console.error('Login failed:', error.response.data)
+            setButtonText("Login Failed!")
+        }
+    };
 
     return (
         <TouchableWithoutFeedback 
@@ -21,7 +40,7 @@ export default function Login({ navigation }) {
                 <View style={styles.container}>
                     {/* Logo Section */}
                     <View style={styles.logoContainer}>
-                        <Logo width={width * 0.5}/>
+                        <Logo width={width * 0.2}/>
                     </View>
                     {/* Form Section */}
                     <View style={[styles.formContainer, {width: width * 0.8, maxWidth: 400}]}>
@@ -43,9 +62,9 @@ export default function Login({ navigation }) {
                                 Forgot Your Password?
                             </Text>
                         </TouchableWithoutFeedback>
-                        <TouchableWithoutFeedback>
-                            <Text style={styles.button} onPress={() => Alert.alert("Log In")}>Log In</Text>
-                        </TouchableWithoutFeedback>
+                        <TouchableOpacity onPress={handleLogin}>
+                            <Text style={styles.button}>{buttontext}</Text>
+                        </TouchableOpacity>
                         <View style={{marginTop: 20}}>
                             <Text>Don't have an account? <Text style={{color: "#1D3B2A", textDecorationLine: "underline"}} onPress={() => navigation.navigate("Signup")}>Sign Up</Text>
                             </Text>
@@ -90,7 +109,7 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     button: {
-        backgroundColor: '#1D3B2A',
+        backgroundColor: '#CF102D',
         color: '#fff',
         padding: 12,
         borderRadius: 10,

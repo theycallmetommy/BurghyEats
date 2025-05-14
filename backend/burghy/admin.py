@@ -5,7 +5,7 @@ class UserAdmin(admin.ModelAdmin):
     list_display = ("username", "password", "banner")
 
 class ShareAdmin(admin.ModelAdmin):
-    list_display = ('pfp', 'name', 'title', 'image', 'desc')
+    list_display = ('pfp','username','postedAt','image','desc','likes','comments')
 
 class MenuAdmin(admin.ModelAdmin):
     list_display = ('image', 'name', 'loc', 'status', 'hours')

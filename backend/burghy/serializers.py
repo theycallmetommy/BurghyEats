@@ -1,15 +1,32 @@
+from django.contrib.auth.models import User
 from rest_framework import serializers
-from .models import User, FoodShare, FoodMenu, FoodItem, MenuPleaseWork
+from .models import FoodShare, FoodMenu, FoodItem, MenuPleaseWork
+
+# class CreateUserSerializer(serializers.ModelSerializer):
+#     username = serializers.CharField()
+#     password = serializers.CharField(write_only=True, style={'input_type','password'})
+
+#     class Meta:
+#         model = get_user_model()
+#         fields = ('username','password','email')
+#         write_only_fields = ('password')
+#         read_only_fields = ('is_staff','is_superuser','is_active')
+
+#     def create(self, validated_data):
+#         user = super(CreateUserSerializer, self).create(validated_data)
+#         user.setpassword(validated_data['password'])
+#         user.save()
+#         return user
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'username', 'password', 'banner')
+        fields = ('id', 'username', 'email')
 
 class ShareSerializer(serializers.ModelSerializer):
     class Meta:
         model = FoodShare
-        fields = ('id', 'pfp', 'name', 'title', 'image', 'desc')
+        fields = ('pfp','username','postedAt','image','desc','likes','comments')
 
 class MenuSerializer(serializers.ModelSerializer):
     class Meta:

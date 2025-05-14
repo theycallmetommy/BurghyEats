@@ -19,8 +19,7 @@ interface FeedCardProps {
     username: string;
     postedAt?: string;
     image: string;
-    description?: string;
-    tags: string[];
+    description: string;
     likes: number;
     comments: number;
 }
@@ -72,7 +71,7 @@ const LocationCardView: React.FC<LocationCardProps> = ({ image, name, location, 
     );
 };
 
-const FeedCardView: React.FC<FeedCardProps> = ({ pfp, username, postedAt, image, description, tags, likes, comments }) => {
+const FeedCardView: React.FC<FeedCardProps> = ({ pfp, username, postedAt, image, description, likes, comments }) => {
   return (
       <View style={cardViewStyles.card}>
           <View style={cardViewStyles.postInfo}>
@@ -83,10 +82,9 @@ const FeedCardView: React.FC<FeedCardProps> = ({ pfp, username, postedAt, image,
             <Text style={{display: 'flex', justifyContent: 'flex-end', color: 'grey', fontWeight: 600}}>{postedAt}</Text>
           </View>
           <View style={{marginBottom: 15}}>
-              <Text style={{fontSize: 15}}>{description}</Text>
+              <Text style={{fontSize: 15}}>{description || "No Description Available"}</Text>
           </View>
           <DynamicImage uri={image}/>
-          <TagList tags={tags}/>
           <View style={[cardViewStyles.buttonsContainer, {marginTop: 10}]}>
             <Button
               icon={

@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
+from rest_framework.authtoken import views as rviews
 from burghy import views
 
 router = routers.DefaultRouter()
@@ -29,5 +30,8 @@ router.register(r'work', views.WorkView, 'work')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include(router.urls))
+    path('api/', include(router.urls)),
+    path('auth/login', views.LoginView.as_view()),
+    #path('auth/register',views.CreateUserAPIView.as_view()),
+    #path('auth/logout',views.LogoutUserAPIView.as_view()),
 ]

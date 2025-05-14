@@ -13,7 +13,7 @@ const Tab = createBottomTabNavigator();
 
 export default function MenuContainer() {
     return (
-        <Tab.Navigator tabBar={(props) => <CustomTabBar {...props} />} initialRouteName='Account'>
+        <Tab.Navigator tabBar={(props) => <CustomTabBar {...props} />} initialRouteName='Home'>
             <Tab.Screen name="Feed" component={Feed} options={{ title: "Feed", headerShown: false }} />
             <Tab.Screen name="Home" component={Home} options={{ title: "Home", headerShown: false }} />
             <Tab.Screen name="Account" component={Account} options={{ title: "Account", headerShown: false}} />
