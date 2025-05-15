@@ -3,7 +3,6 @@ import { View, Text, Image, StyleSheet, TouchableHighlight, TouchableOpacity } f
 import { Button } from 'react-native-elements';
 import DynamicImage from './dynamicImageAR';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import TagList from './tagList';
 import OrderProgressBar from './orderProgressBar';
 
 interface LocationCardProps {
@@ -68,7 +67,6 @@ const LocationCardView: React.FC<LocationCardProps> = ({ image, name, location, 
                     <Text style={diningStyles.review}>4.99</Text>
                     <Text style={[diningStyles.review, {color: '#8C8279', fontWeight: 400, marginLeft: 5}]}>(271 reviews)</Text>
                   </View>
-                  <TagList tags={["Sandwich", "Soup"]} scrollOverflow={false}/>
               </View>
             </View>
         </TouchableHighlight>
@@ -89,7 +87,6 @@ const FeedCardView: React.FC<FeedCardProps> = ({ pfp, username, postedAt, image,
               <Text style={{fontSize: 15}}>{description}</Text>
           </View>
           <DynamicImage uri={image}/>
-          <TagList tags={tags}/>
           <View style={[cardViewStyles.buttonsContainer, {marginTop: 10}]}>
             <Button
               icon={

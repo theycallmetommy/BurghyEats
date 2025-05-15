@@ -2,6 +2,7 @@ import React from "react";
 import { ScrollView, Text, View } from "react-native";
 import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
 import {LocationCardView} from "../../components/cardView";
+import { useRouter } from 'expo-router';
 
 const locations = [
     {
@@ -54,6 +55,8 @@ const locations = [
         hours: "9am - 3pm",
     },
 ];
+
+const router = useRouter();
   
 export default function Home() {
     return (
@@ -69,7 +72,10 @@ export default function Home() {
                                 location={loc.location}
                                 open={loc.open}
                                 hours={loc.hours}
-                                onPress={() => console.log(`Pressed ${loc.name}`)}
+                                onPress={() => router.push({
+                                    pathname: "/menu",
+                                    params: { location: loc.name}
+                                })}
                             />
                         ))}
                     </View>

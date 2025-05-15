@@ -28,8 +28,7 @@ export default function Account() {
       };
 
     return (
-        <SafeAreaProvider>
-            <SafeAreaView style={{ flex: 1 }}>
+        <View>
                 <View style={[style.infoContainer, {padding: 20}]}>
                     <Image source={{ uri: "https://avatar.iran.liara.run/public" }} width={65} height={65} />
                     <View>
@@ -69,49 +68,9 @@ export default function Account() {
                                 <OrderCardView
                                 orderId="123456"
                                 location="Kent Cafe"
-                                delivery={false}
-                                readyAt="2023-10-01"
-                                orderStatus="delivered"
-                                orderDate="2023-10-01"
-                                orderTotal="$10.48"
-                                items={exampleItems}
-                                />
-                                <OrderCardView
-                                orderId="123456"
-                                location="Einstein Bros"
-                                delivery={false}
+                                delivery={true}
                                 readyAt="2023-10-01"
                                 orderStatus="picked"
-                                orderDate="2023-10-01"
-                                orderTotal="$10.48"
-                                items={exampleItems}
-                                />
-                                <OrderCardView
-                                orderId="123456"
-                                location="Halal Shack"
-                                delivery={false}
-                                readyAt="2023-10-01"
-                                orderStatus="preparing"
-                                orderDate="2023-10-01"
-                                orderTotal="$10.48"
-                                items={exampleItems}
-                                />
-                                <OrderCardView
-                                orderId="123456"
-                                location="Platts Pizza"
-                                delivery={true}
-                                readyAt="2023-10-01"
-                                orderStatus="placed"
-                                orderDate="2023-10-01"
-                                orderTotal="$10.48"
-                                items={exampleItems}
-                                />
-                                <OrderCardView
-                                orderId="123456"
-                                location="Tim Hortons"
-                                delivery={true}
-                                readyAt="2023-10-01"
-                                orderStatus="delivered"
                                 orderDate="2023-10-01"
                                 orderTotal="$10.48"
                                 items={exampleItems}
@@ -153,25 +112,6 @@ export default function Account() {
                                             <MaterialCommunityIcons name="chevron-right" size={20}/>
                                         </TouchableOpacity>
                                         <Divider width={2.5} />
-                                        <TouchableOpacity style={{ backgroundColor: 'lightgrey', flexDirection: 'row', justifyContent: "space-between", alignItems: 'center', padding: 15}}>
-                                            <Text>Visa ****2646</Text>
-                                            <MaterialCommunityIcons name="chevron-right" size={20}/>
-                                        </TouchableOpacity>
-                                        <Divider width={2.5} />
-                                        <TouchableOpacity style={{ backgroundColor: 'lightgrey', flexDirection: 'row', justifyContent: "space-between", alignItems: 'center', padding: 15}}>
-                                            <Text>Amex ****4534</Text>
-                                            <MaterialCommunityIcons name="chevron-right" size={20}/>
-                                        </TouchableOpacity>
-                                        <Divider width={2.5} />
-                                        <TouchableOpacity style={{ backgroundColor: 'lightgrey', flexDirection: 'row', justifyContent: "space-between", alignItems: 'center', padding: 15}}>
-                                            <Text>Discover ****6635</Text>
-                                            <MaterialCommunityIcons name="chevron-right" size={20}/>
-                                        </TouchableOpacity>
-                                        <Divider width={2.5} />
-                                        <TouchableOpacity style={{ backgroundColor: 'lightgrey', flexDirection: 'row', justifyContent: "space-between", alignItems: 'center', padding: 15}}>
-                                            <Text>Mastercard ****8753</Text>
-                                            <MaterialCommunityIcons name="chevron-right" size={20}/>
-                                        </TouchableOpacity>
                                     </View>
                                     <TouchableOpacity style={[style.button, {flexDirection: 'row', alignItems: 'center', gap: 5}]}>
                                         <MaterialCommunityIcons name="plus" size={24} color="black" />
@@ -191,8 +131,7 @@ export default function Account() {
                     </PopupCard>
                 )}
 
-            </SafeAreaView>
-        </SafeAreaProvider>
+        </View>
     );
 }
 
