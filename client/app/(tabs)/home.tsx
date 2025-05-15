@@ -1,9 +1,10 @@
 import React, {useState, useEffect} from "react";
 import { ScrollView, Text, View, Button,} from "react-native";
 import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
-import {DBLocationCardView, LocationCardView} from "../../components/cardView";
+import { DBLocationCardView , LocationCardView} from "../../components/cardView";
 import axios from "axios";
 import { FlatList } from "react-native-gesture-handler";
+import { useRouter } from 'expo-router';
 
 type Menu = {
     image: string;
@@ -16,6 +17,8 @@ type Menu = {
 
 const test = {image: "https://i.pinimg.com/736x/1f/95/6a/1f956a6a6bb3dd6a2ec653fc1d1bfd9e.jpg", name: "Hi Martin",loc: "Beaumont Lounge",status: true,hours: "3:30pm-4:45pm"}
 
+const router = useRouter();
+  
 export default function Home() {
     const [menus, setMenus] = useState<Menu[]>([]);
 
@@ -56,12 +59,15 @@ export default function Home() {
                         {menus.map((menu, index) => (
                             <LocationCardView
                                 key={index}
-                                name = {menu.name}
                                 image={menu.image}
+                                name={menu.name}
                                 location={menu.loc}
                                 open={menu.status}
                                 hours={menu.hours}
-                                onPress={() => console.log(`Pressed ${menu.name}`)}
+                                onPress={() => router.push({
+                                    pathname: "/menu",
+                                    params: { location: menu.name}
+                                })}
                             />
                         ))}
                     </View>
