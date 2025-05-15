@@ -24,6 +24,8 @@ router.register(r'user', views.UserView, 'user')
 router.register(r'posts', views.PostView, 'posts')
 router.register(r'locations', views.LocationView, 'locations')
 router.register(r'menuitem', views.MenuView, 'menuitem')
+router.register(r'comments', views.CommentView, 'comments')
+
 
 router.register(r'menuoption', views.MenuOptionView, 'menuoption')
 

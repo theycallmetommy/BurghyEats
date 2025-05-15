@@ -23,6 +23,7 @@ interface FeedCardProps {
     tags: string[];
     likes: number;
     comments: number;
+    onLike: () => void;
 }
 
 interface OrderCardProps {
@@ -82,7 +83,7 @@ const LocationCardView: React.FC<LocationCardProps> = ({ image, name, loc, close
     );
 };
 
-const FeedCardView: React.FC<FeedCardProps> = ({ pfp, username, postedAt, image, description, tags, likes, comments }) => {
+const FeedCardView: React.FC<FeedCardProps> = ({ pfp, username, postedAt, image, description, onLike, likes, comments }) => {
   return (
       <View style={cardViewStyles.card}>
           <View style={cardViewStyles.postInfo}>
@@ -108,6 +109,7 @@ const FeedCardView: React.FC<FeedCardProps> = ({ pfp, username, postedAt, image,
               buttonStyle={{backgroundColor: 'transparent', gap: 5}}
               titleStyle={{color: 'black'}}
               title={likes.toString()}
+              onPress={onLike}
             />
             <Button 
               icon={

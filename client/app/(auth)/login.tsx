@@ -1,27 +1,44 @@
 import { StatusBar } from 'expo-status-bar';
 import React from "react";
-import { Platform, Text, TextInput, View, SafeAreaView, StyleSheet, Keyboard, TouchableWithoutFeedback, Alert, Dimensions } from "react-native";
+import { Platform, ScrollView, Text, KeyboardAvoidingView, TextInput, View, SafeAreaView, StyleSheet, Keyboard, TouchableWithoutFeedback, Alert, Dimensions } from "react-native";
 import Logo from "../../assets/logo.svg";
+import { useRouter } from 'expo-router';
+
 
 export default function Login({ navigation }) {
     const [user, onChangeUsername] = React.useState('');
     const [pass, onChangePassword] = React.useState('');
+    const router = useRouter(); // if you're using expo-router
+
 
     const {width} = Dimensions.get('screen');
 
+    const handleLogin = () => {
+  // fake auth check
+  if (user.trim() !== '' && pass.trim() !== '') {
+    router.replace('/home'); // or router.push('/home') if you want back nav
+  } else {
+    alert('Enter something');
+  }
+};
+
     return (
-        <TouchableWithoutFeedback 
-        onPress={() => {
-            if (Platform.OS !== 'web') {
-                Keyboard.dismiss();
-            }
-        }} 
-        accessible={false}>
-            <SafeAreaView style={styles.safeArea}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
+            <KeyboardAvoidingView
+                behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+                style={{ flex: 1 }}
+                keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
+            >
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                <ScrollView
+                    contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', padding: 20 }}
+                    keyboardShouldPersistTaps="handled"
+                >
+
                 <View style={styles.container}>
                     {/* Logo Section */}
                     <View style={styles.logoContainer}>
-                        <Logo width={width * 0.5}/>
+                        <Logo width={width * 0.5} height={width * 0.4}/>
                     </View>
                     {/* Form Section */}
                     <View style={[styles.formContainer, {width: width * 0.8, maxWidth: 400}]}>
@@ -44,41 +61,31 @@ export default function Login({ navigation }) {
                             </Text>
                         </TouchableWithoutFeedback>
                         <TouchableWithoutFeedback>
-                            <Text style={styles.button} onPress={() => Alert.alert("Log In")}>Log In</Text>
+                            <Text style={styles.button} onPress={handleLogin}>Log In</Text>
                         </TouchableWithoutFeedback>
                         <View style={{marginTop: 20}}>
-                            <Text>Don't have an account? <Text style={{color: "#1D3B2A", textDecorationLine: "underline"}} onPress={() => navigation.navigate("Signup")}>Sign Up</Text>
+                            <Text>Don't have an account? <Text style={{color: "#1D3B2A", textDecorationLine: "underline"}} onPress={() => router.replace('/signup')}>Sign Up</Text>
                             </Text>
                         </View>
                     </View>
                 </View>
-            </SafeAreaView>
+                </ScrollView>
         </TouchableWithoutFeedback>
+        </KeyboardAvoidingView>
+            </SafeAreaView>
     );
 }
 
 const styles = StyleSheet.create({
-    safeArea: {
-        flex: 1,
-        backgroundColor: '#fff',
-    },
     container: {
-        flex: 1,
-        width: '100%',
-        height: '100%',
         alignItems: 'center',
-        justifyContent: 'center',
-        gap: 25,
+        justifyContent: 'flex-start', // stack from the top
     },
     logoContainer : {
         backgroundColor: '#00000',
-        paddingBottom: 75,
-        top: "20%",
-        position: 'absolute',
     },
     formContainer : {
         backgroundColor: '#00000',
-        paddingTop: 75,
     },
     input : {
         height: 50,
@@ -90,7 +97,7 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     button: {
-        backgroundColor: '#1D3B2A',
+        backgroundColor: '#9B2743',
         color: '#fff',
         padding: 12,
         borderRadius: 10,

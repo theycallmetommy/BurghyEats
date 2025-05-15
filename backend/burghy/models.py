@@ -12,7 +12,14 @@ class User(models.Model):
 
 class UserPost(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts')
-    image = models.CharField(max_length=100)
+    image = models.CharField(max_length=300)
+    content = models.TextField()
+    posted_at = models.DateTimeField(auto_now_add=True)
+    likes = models.ManyToManyField(User, related_name='liked_posts', blank=True)
+
+class Comment(models.Model):
+    post = models.ForeignKey(UserPost, on_delete=models.CASCADE, related_name='comments')
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField()
     posted_at = models.DateTimeField(auto_now_add=True)
 
