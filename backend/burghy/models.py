@@ -29,7 +29,7 @@ class FoodLocation(models.Model):
 class MenuItem(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True)
-    image = models.CharField(max_length=100)
+    image = models.CharField(max_length=200)
     price = models.DecimalField(max_digits=5, decimal_places=2)  # price in dollars
     location = models.ForeignKey(FoodLocation, on_delete=models.CASCADE, related_name='items')
     meal_swipe_elegible = models.BooleanField(default=False)

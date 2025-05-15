@@ -55,7 +55,8 @@ interface ItemCard {
   description: string,
   image: string,
   price: string,
-  meal_swipe_elegible: boolean
+  meal_swipe_elegible: boolean,
+  onPress: () => void
 }
 
 const LocationCardView: React.FC<LocationCardProps> = ({ image, name, loc, closes_at, opens_at, onPress }) => {
@@ -209,17 +210,27 @@ const WalletCard: React.FC<WalletInfo> = ({ name, balance, mealSwipe, onPress, i
   );
 };
 
-const ItemCardView: React.FC<ItemCard> = ({ name, description, image, price, meal_swipe_elegible}) => {
+const ItemCardView: React.FC<ItemCard> = ({ name, description, image, price, meal_swipe_elegible, onPress}) => {
   return (
-    <View>
-      <Image style={{width: '100%', aspectRatio: 2/2}} source={{uri: image}}/>
-      <View>
-        <Text>{name}</Text>
-        <Text>{description}</Text>
-        <Text>{price}</Text>
-        <Text>{meal_swipe_elegible? 'Meal Swipe' : ''}</Text>
+    <TouchableOpacity onPress={onPress}>
+      <View style={{flexDirection: 'row', gap: 15, padding: 20, paddingVertical: 20}}>
+        <View style={{ flex: 1 }}>
+          <View>
+          <Text style={{fontSize: 16, fontWeight: 600}}>{name}</Text>
+            {description?.trim() && (
+              <Text style={{ flexWrap: 'wrap' }}>
+                {description.length > 110
+                  ? `${description.slice(0, 110)}...`
+                  : description}
+              </Text>  
+            )}
+          </View>
+          <Text>{price}</Text>
+          <Text>{meal_swipe_elegible? 'Meal Swipe' : ''}</Text>
+        </View>
+        <Image style={{width: 80, aspectRatio: 1, borderRadius: 10}} source={{uri: image}}/>
       </View>
-    </View>
+    </TouchableOpacity>
   )
 };
 
