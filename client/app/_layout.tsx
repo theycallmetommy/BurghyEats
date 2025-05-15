@@ -1,11 +1,13 @@
 import { Stack } from 'expo-router';
-import { View, StyleSheet } from 'react-native';
-import COLORS from './constants/colors';
-import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
-
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { CartProvider } from '../context/cartContext'; // adjust the path if needed
 
 export default function Layout() {
-    return (
+  return (
+    <SafeAreaProvider>
+      <CartProvider>
         <Stack screenOptions={{ headerShown: false }} />
-    );
+      </CartProvider>
+    </SafeAreaProvider>
+  );
 }

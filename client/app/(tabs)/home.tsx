@@ -39,6 +39,9 @@ export default function Home() {
         <SafeAreaProvider>
             <SafeAreaView style={{ flex: 1 }}>
                 <ScrollView style={{flexGrow: 1}}>
+                    <View style={{ padding: 15 }}>
+                        <Button title="Go to Checkout" onPress={() => router.push('/checkout')} />
+                    </View>
                     <View style={{display: 'flex', gap: 15}}>
                         {menus.map((menu, index) => (
                             <LocationCardView

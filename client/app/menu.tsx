@@ -5,6 +5,9 @@ import { useLocalSearchParams } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 
 import { ItemCardView } from "../components/cardView";
+import { Divider } from 'react-native-elements'; // or from '@rneui/themed'
+
+import { useCart } from '../context/cartContext';
 
 
 
@@ -12,7 +15,8 @@ export default function Menu() {
     const { location } = useLocalSearchParams();
     const [menuItems, setMenuItems] = useState([]);
     const [locationData, setLocationData] = useState(null);
-
+    const { addToCart } = useCart();
+    
     useEffect(() => {
         const fetchMenuItems = async () => {
             try {
@@ -67,16 +71,20 @@ export default function Menu() {
                 ) : (
                     <Text>Loading location...</Text>
                 )}
-                <ScrollView style={{flex: 1, marginVertical: 15, paddingHorizontal: 15}}>
+                <ScrollView style={{flex: 1, marginVertical: 15}}>
 
                     {menuItems.map((item, index) => (
-                        <ItemCardView
-                         name={item.name}
-                         description={item.description}
-                         price={item.price}
-                         image={item.image}
-                         meal_swipe_elegible={item.meal_swipe_elegible}
-                        />
+                        <View key={index}>
+                            <ItemCardView
+                             name={item.name}
+                             description={item.description}
+                             price={item.price}
+                             image={item.image}
+                             meal_swipe_elegible={item.meal_swipe_elegible}
+                             onPress={() => addToCart(item.id)}
+                            />
+                            {index < menuItems.length - 1 && <Divider width={1} />}
+                        </View>
                     ))}
                 </ScrollView>
             </SafeAreaView>
