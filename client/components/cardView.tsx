@@ -8,9 +8,9 @@ import OrderProgressBar from './orderProgressBar';
 interface LocationCardProps {
     image: string;
     name: string;
-    location: string;
-    hours?: string;
-    open: boolean;
+    loc: string;
+    opens_at: string;
+    closes_at: string;
     onPress: () => void;
 }
 
@@ -50,7 +50,7 @@ interface WalletInfo {
   icon: string
 }
 
-const LocationCardView: React.FC<LocationCardProps> = ({ image, name, location, hours, open, onPress }) => {
+const LocationCardView: React.FC<LocationCardProps> = ({ image, name, loc, closes_at, opens_at, onPress }) => {
     return (
         <TouchableHighlight onPress={onPress} style={[cardViewStyles.cardMini]}>
             <View style={[diningStyles.cardContent]}>
@@ -59,7 +59,7 @@ const LocationCardView: React.FC<LocationCardProps> = ({ image, name, location, 
                   <View style={[diningStyles.detailsBox, {marginTop: 0, marginBottom: 0, gap: 10,}]}>
                     <Text style={{fontWeight: 700, fontSize: 19}}>{name}</Text>
                     <Text style={{color: '#8C8279'}}>
-                      <MaterialCommunityIcons name="map-marker-outline" size={12} color="#8C8279"/> {location} 
+                      <MaterialCommunityIcons name="map-marker-outline" size={12} color="#8C8279"/> {loc} 
                     </Text>
                   </View>
                   <View style={diningStyles.detailsBox}>

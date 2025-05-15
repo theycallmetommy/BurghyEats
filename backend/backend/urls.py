@@ -21,11 +21,13 @@ from burghy import views
 
 router = routers.DefaultRouter()
 router.register(r'user', views.UserView, 'user')
-router.register(r'foodshare', views.ShareView, 'foodshare')
-router.register(r'menu', views.MenuView, 'menu')
-router.register(r'fooditem', views.ItemView, 'fooditem')
-router.register(r'work', views.WorkView, 'work')
+router.register(r'posts', views.PostView, 'posts')
+router.register(r'locations', views.LocationView, 'locations')
+router.register(r'menuitem', views.MenuView, 'menuitem')
 
+router.register(r'paymentmethod', views.PaymentMethodView, 'paymentmethod')
+router.register(r'allowedpayment', views.AllowedPaymentView, 'allowedpayment')
+router.register(r'menuoption', views.MenuOptionView, 'menuoption')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
