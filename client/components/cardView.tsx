@@ -8,9 +8,9 @@ import OrderProgressBar from './orderProgressBar';
 interface LocationCardProps {
     image: string;
     name: string;
-    location: string;
-    hours?: string;
-    open: boolean;
+    loc: string;
+    opens_at: string;
+    closes_at: string;
     onPress: () => void;
 }
 
@@ -50,7 +50,15 @@ interface WalletInfo {
   icon: string
 }
 
-const LocationCardView: React.FC<LocationCardProps> = ({ image, name, location, hours, open, onPress }) => {
+interface ItemCard {
+  name: string,
+  description: string,
+  image: string,
+  price: string,
+  meal_swipe_elegible: boolean
+}
+
+const LocationCardView: React.FC<LocationCardProps> = ({ image, name, loc, closes_at, opens_at, onPress }) => {
     return (
         <TouchableHighlight onPress={onPress} style={[cardViewStyles.cardMini]}>
             <View style={[diningStyles.cardContent]}>
@@ -59,7 +67,7 @@ const LocationCardView: React.FC<LocationCardProps> = ({ image, name, location, 
                   <View style={[diningStyles.detailsBox, {marginTop: 0, marginBottom: 0, gap: 10,}]}>
                     <Text style={{fontWeight: 700, fontSize: 19}}>{name}</Text>
                     <Text style={{color: '#8C8279'}}>
-                      <MaterialCommunityIcons name="map-marker-outline" size={12} color="#8C8279"/> {location} 
+                      <MaterialCommunityIcons name="map-marker-outline" size={12} color="#8C8279"/> {loc} 
                     </Text>
                   </View>
                   <View style={diningStyles.detailsBox}>
@@ -201,6 +209,25 @@ const WalletCard: React.FC<WalletInfo> = ({ name, balance, mealSwipe, onPress, i
   );
 };
 
+const ItemCardView: React.FC<ItemCard> = ({ name, description, image, price, meal_swipe_elegible}) => {
+  return (
+    <View>
+      <Image style={{width: '100%', aspectRatio: 2/2}} source={{uri: image}}/>
+      <View>
+        <Text>{name}</Text>
+        <Text>{description}</Text>
+        <Text>{price}</Text>
+        <Text>{meal_swipe_elegible? 'Meal Swipe' : ''}</Text>
+      </View>
+    </View>
+  )
+};
+
+const itemCardStyle = StyleSheet.create({
+  image: {
+    width: '100%'
+  }
+})
 
 // Styles
 const cardViewStyles = StyleSheet.create({
@@ -310,4 +337,4 @@ const walletStyles = StyleSheet.create({
   }
 });
   
-export { LocationCardView, FeedCardView, OrderCardView, WalletCard };
+export { LocationCardView, FeedCardView, OrderCardView, WalletCard, ItemCardView };

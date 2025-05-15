@@ -1,27 +1,27 @@
 from rest_framework import serializers
-from .models import User, FoodShare, FoodMenu, FoodItem, MenuPleaseWork
+from .models import User, UserPost, FoodLocation, MenuItem, MenuOption
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'username', 'password', 'banner')
+        fields = ('id', 'pfp', 'name', 'username', 'password', 'banner')
 
-class ShareSerializer(serializers.ModelSerializer):
+class PostSerializer(serializers.ModelSerializer):
     class Meta:
-        model = FoodShare
-        fields = ('id', 'pfp', 'name', 'title', 'image', 'desc')
+        model = UserPost
+        fields = ('id', 'user', 'image', 'content', 'posted_at')
+
+class LocationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FoodLocation
+        fields = ('id', 'image', 'name', 'loc', 'opens_at', 'closes_at')
 
 class MenuSerializer(serializers.ModelSerializer):
     class Meta:
-        model = FoodMenu
-        fields = ('id', 'image', 'name', 'loc', 'status', 'hours')
+        model = MenuItem
+        fields = ('id', 'name', 'description', 'image', 'price', 'location', 'meal_swipe_elegible')
 
-class MenuWorkSerializer(serializers.ModelSerializer):
+class MenuOptionSerializer(serializers.ModelSerializer):
     class Meta:
-        model = MenuPleaseWork
-        fields = ('id','image', 'name', 'loc', 'status', 'hours')
-
-class ItemSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = FoodItem
-        fields = ('id', 'menu', 'name', 'image')
+        model = MenuOption
+        fields = ('id', 'item', 'category', 'choices')

@@ -1,5 +1,40 @@
+# Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
+
 client/.example
 client/app-example
+
+# dependencies
+node_modules/
+
+# Expo
+.expo/
+dist/
+web-build/
+expo-env.d.ts
+
+# Native
+*.orig.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+
+# Metro
+.metro-health-check*
+
+# debug
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+
+*.pem
+
+# local env files
+.env*.local
+
+# typescript
+*.tsbuildinfo
 
 # Node.js dependencies
 client/node_modules/
@@ -21,3 +56,10 @@ Thumbs.db
 firebase.json
 client/google-services.json
 client/GoogleService-Info.plist
+
+# Ignore Python cache files
+__pycache__/
+*.py[cod]
+*.pyc
+*.pyo
+*.pyd
