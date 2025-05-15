@@ -29,22 +29,13 @@ class FoodLocation(models.Model):
 class MenuItem(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True)
-    image = models.URLField(blank=True)
+    image = models.CharField(max_length=100)
     price = models.DecimalField(max_digits=5, decimal_places=2)  # price in dollars
     location = models.ForeignKey(FoodLocation, on_delete=models.CASCADE, related_name='items')
+    meal_swipe_elegible = models.BooleanField(default=False)
 
-class PaymentMethod(models.Model):
-    METHOD_CHOICES = [
-        ('swipe', 'Meal Swipe'),
-        ('dining_dollars', 'Dining Dollars'),
-        ('cardinal_cash', 'Cardinal Cash'),
-        ('credit_card', 'Credit Card'),
-    ]
-    name = models.CharField(max_length=20, choices=METHOD_CHOICES, unique=True)
-
-class AllowedPayment(models.Model):
-    item = models.ForeignKey(MenuItem, on_delete=models.CASCADE, related_name='allowed_payments')
-    method = models.ForeignKey(PaymentMethod, on_delete=models.CASCADE)
+    def __str__(self):
+        return f"{self.name} @ {self.location}"
 
 class MenuOption(models.Model):
     item = models.ForeignKey(MenuItem, on_delete=models.CASCADE, related_name='options')

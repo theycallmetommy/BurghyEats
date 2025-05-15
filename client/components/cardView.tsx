@@ -50,6 +50,14 @@ interface WalletInfo {
   icon: string
 }
 
+interface ItemCard {
+  name: string,
+  description: string,
+  image: string,
+  price: string,
+  meal_swipe_elegible: boolean
+}
+
 const LocationCardView: React.FC<LocationCardProps> = ({ image, name, loc, closes_at, opens_at, onPress }) => {
     return (
         <TouchableHighlight onPress={onPress} style={[cardViewStyles.cardMini]}>
@@ -201,6 +209,25 @@ const WalletCard: React.FC<WalletInfo> = ({ name, balance, mealSwipe, onPress, i
   );
 };
 
+const ItemCardView: React.FC<ItemCard> = ({ name, description, image, price, meal_swipe_elegible}) => {
+  return (
+    <View>
+      <Image style={{width: '100%', aspectRatio: 2/2}} source={{uri: image}}/>
+      <View>
+        <Text>{name}</Text>
+        <Text>{description}</Text>
+        <Text>{price}</Text>
+        <Text>{meal_swipe_elegible? 'Meal Swipe' : ''}</Text>
+      </View>
+    </View>
+  )
+};
+
+const itemCardStyle = StyleSheet.create({
+  image: {
+    width: '100%'
+  }
+})
 
 // Styles
 const cardViewStyles = StyleSheet.create({
@@ -310,4 +337,4 @@ const walletStyles = StyleSheet.create({
   }
 });
   
-export { LocationCardView, FeedCardView, OrderCardView, WalletCard };
+export { LocationCardView, FeedCardView, OrderCardView, WalletCard, ItemCardView };

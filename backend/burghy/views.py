@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import viewsets
-from .serializers import UserSerializer, PostSerializer, LocationSerializer, MenuSerializer, PaymentMethodSerializer, AllowedPaymentSerializer, MenuOptionSerializer
-from .models import User, UserPost, FoodLocation, MenuItem, PaymentMethod, AllowedPayment, MenuOption
+from .serializers import UserSerializer, PostSerializer, LocationSerializer, MenuSerializer, MenuOptionSerializer
+from .models import User, UserPost, FoodLocation, MenuItem, MenuOption
 
 # Create your views here.
 
@@ -19,15 +19,13 @@ class LocationView(viewsets.ModelViewSet):
 
 class MenuView(viewsets.ModelViewSet):
     serializer_class = MenuSerializer
-    queryset = MenuItem.objects.all()
 
-class PaymentMethodView(viewsets.ModelViewSet):
-    serializer_class = PaymentMethodSerializer
-    queryset = PaymentMethod.objects.all()
-
-class AllowedPaymentView(viewsets.ModelViewSet):
-    serializer_class = AllowedPaymentSerializer
-    queryset = AllowedPayment.objects.all()
+    def get_queryset(self):
+        queryset = MenuItem.objects.all()
+        location_id = self.request.query_params.get('location')
+        if location_id is not None:
+            queryset = queryset.filter(location_id=location_id)
+        return queryset
 
 class MenuOptionView(viewsets.ModelViewSet):
     serializer_class = MenuOptionSerializer

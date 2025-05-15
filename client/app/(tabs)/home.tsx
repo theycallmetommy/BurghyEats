@@ -50,7 +50,7 @@ export default function Home() {
                                 closes_at={menu.closes_at}
                                 onPress={() => router.push({
                                     pathname: "/menu",
-                                    params: { location: menu.name}
+                                    params: { location: menu.id}
                                 })}
                             />
                         ))}

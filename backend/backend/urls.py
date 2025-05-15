@@ -25,8 +25,6 @@ router.register(r'posts', views.PostView, 'posts')
 router.register(r'locations', views.LocationView, 'locations')
 router.register(r'menuitem', views.MenuView, 'menuitem')
 
-router.register(r'paymentmethod', views.PaymentMethodView, 'paymentmethod')
-router.register(r'allowedpayment', views.AllowedPaymentView, 'allowedpayment')
 router.register(r'menuoption', views.MenuOptionView, 'menuoption')
 
 urlpatterns = [

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User, UserPost, FoodLocation, MenuItem, MenuOption, AllowedPayment, PaymentMethod
+from .models import User, UserPost, FoodLocation, MenuItem, MenuOption
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -19,17 +19,7 @@ class LocationSerializer(serializers.ModelSerializer):
 class MenuSerializer(serializers.ModelSerializer):
     class Meta:
         model = MenuItem
-        fields = ('id', 'menu', 'name', 'image')
-
-class PaymentMethodSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = PaymentMethod
-        fields = ('id', 'name')
-
-class AllowedPaymentSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = AllowedPayment
-        fields = ('id', 'item', 'method')  # or customize as needed
+        fields = ('id', 'name', 'description', 'image', 'price', 'location', 'meal_swipe_elegible')
 
 class MenuOptionSerializer(serializers.ModelSerializer):
     class Meta:
