@@ -13,7 +13,7 @@ import PopupCard from "../../components/popupCard";
 const router = useRouter();
 
 export default function Account() {
-    const [activeTab, setActiveTab] = useState<'Orders' | 'Wallet'>('Wallet');
+    const [activeTab, setActiveTab] = useState<'Orders' | 'Wallet'>('Orders');
     const exampleItems = [
         { name: 'Sandwich', qty: 2, price: 5.99 },
         { name: 'Salad',    qty: 1, price: 4.49 }
@@ -65,6 +65,26 @@ export default function Account() {
                         {
                             activeTab === 'Orders' && 
                             <View style={{gap: 15}}>
+                                <OrderCardView
+                                orderId="123456"
+                                location="Kent Cafe"
+                                delivery={true}
+                                readyAt="2023-10-01"
+                                orderStatus="picked"
+                                orderDate="2023-10-01"
+                                orderTotal="$10.48"
+                                items={exampleItems}
+                                />
+                                <OrderCardView
+                                orderId="123456"
+                                location="Kent Cafe"
+                                delivery={true}
+                                readyAt="2023-10-01"
+                                orderStatus="picked"
+                                orderDate="2023-10-01"
+                                orderTotal="$10.48"
+                                items={exampleItems}
+                                />
                                 <OrderCardView
                                 orderId="123456"
                                 location="Kent Cafe"

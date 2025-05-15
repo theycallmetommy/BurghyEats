@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import viewsets
-from .serializers import UserSerializer, PostSerializer, LocationSerializer, MenuSerializer, MenuOptionSerializer
-from .models import User, UserPost, FoodLocation, MenuItem, MenuOption
+from .serializers import UserSerializer, PostSerializer, LocationSerializer, MenuSerializer, MenuOptionSerializer, CommentSerializer
+from .models import User, UserPost, FoodLocation, MenuItem, MenuOption, Comment
 
 # Create your views here.
 
@@ -11,7 +11,7 @@ class UserView(viewsets.ModelViewSet):
 
 class PostView(viewsets.ModelViewSet):
     serializer_class = PostSerializer
-    queryset = UserPost.objects.all()
+    queryset = UserPost.objects.all().order_by('-posted_at')
 
 class LocationView(viewsets.ModelViewSet):
     serializer_class = LocationSerializer
@@ -30,3 +30,7 @@ class MenuView(viewsets.ModelViewSet):
 class MenuOptionView(viewsets.ModelViewSet):
     serializer_class = MenuOptionSerializer
     queryset = MenuOption.objects.all()
+
+class CommentView(viewsets.ModelViewSet):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer

@@ -2,6 +2,8 @@ import { StatusBar } from 'expo-status-bar';
 import React from "react";
 import { Platform, Text, TextInput, View, SafeAreaView, StyleSheet, Keyboard, TouchableWithoutFeedback, Alert, Dimensions } from "react-native";
 import Logo from "../../assets/logo.svg";
+import { useRouter } from 'expo-router';
+
 
 export default function Signup({ navigation }) {
     const [firstName, onChangeFirstName] = React.useState('');
@@ -11,6 +13,8 @@ export default function Signup({ navigation }) {
     const [confirmPass, onChangeConfirmPassword] = React.useState('');
 
     const {width} = Dimensions.get('screen');
+     const router = useRouter(); // if you're using expo-router
+    
 
     return (
         <SafeAreaView style={styles.safeArea}>
@@ -24,7 +28,7 @@ export default function Signup({ navigation }) {
                 <View style={styles.container}>
                     {/* Logo Section */}
                     <View style={styles.logoContainer}>
-                        <Logo width={width * 0.5}/>
+                        <Logo width={width * 0.5} height={width * 0.3}/>
                     </View>
                     {/* Form Section */}
                     <View style={[styles.formContainer, {width: width * 0.8, maxWidth: 400}]}>
@@ -64,7 +68,7 @@ export default function Signup({ navigation }) {
                             <Text style={styles.button} onPress={() => Alert.alert("Sign Up")}>Sign Up</Text>
                         </TouchableWithoutFeedback>
                         <View style={{marginTop: 20}}>
-                            <Text>Already have an account? <Text style={{color: "#1D3B2A", textDecorationLine: "underline"}} onPress={() => navigation.goBack()}>Log In</Text>
+                            <Text>Already have an account? <Text style={{color: "#1D3B2A", textDecorationLine: "underline"}} onPress={() => router.replace('/login')}>Log In</Text>
                             </Text>
                         </View>
                     </View>
